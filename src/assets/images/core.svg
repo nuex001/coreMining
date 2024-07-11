@@ -1,0 +1,10 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Core rock outline -->
+  <path d="M50 50 L150 50 L175 100 L150 150 L50 150 L25 100 Z" fill="#f49212" stroke="#000" stroke-width="2"/>
+  
+  <!-- Inner layer -->
+  <path d="M60 60 L140 60 L160 100 L140 140 L60 140 L40 100 Z" fill="#f36623" stroke="#000" stroke-width="2"/>
+  
+  <!-- Core -->
+  <circle cx="100" cy="100" r="30" fill="#fffece" stroke="#000" stroke-width="2"/>
+</svg>

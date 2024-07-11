@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cinzel:wght@400..900&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  text-decoration: none;
+}
+::selection {
+  display: none;
+}
+
+/* For older browsers */
+::-moz-selection {
+  display: none;
+}
+
+/* 
+ font-family: "Cinzel", serif;
+font-family: "Chakra Petch", sans-serif;
+*/
+
+:root {
+  --bg: #fffefe;
+  --primary: #f49212;
+  --header: #f36623;
+  --text: #121212;
+}
+
+body {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  background: var(--bg);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+.container {
+  width: 100%;
+  height: 100vh;
+  font-size: 10px;
+  font-family: "Chakra Petch", sans-serif;
+  background: var(--bg);
+}
+
+.container nav {
+  position: fixed;
+  bottom: 5%;
+  left: 0%;
+  width: 100%;
+  height: 8em;
+  display: flex;
+  align-items: center;
+  padding: 1em 2em;
+  border-radius: 20px;
+  z-index: 999999;
+  /* border: 2px solid; */
+}
+.container nav ul {
+  width: 100%;
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container nav ul li a {
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--primary);
+  padding: 1em 1.8em;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+  transition: 500ms ease-in-out;
+}
+.container nav ul li a .icon {
+  font-size: 3em;
+}
+.container nav ul li a.active {
+  color: var(--bg);
+  background: var(--primary);
+}
+
+/* SMALLER DEVICE */
+@media (max-width: 320px) {
+  .container {
+    font-size: 0.7em;
+  }
+  .container nav {
+    height: auto;
+    padding: 0em 2em;
+  }
+  .container nav ul li a {
+    font-size: 0.8em;
+    gap: 0.2em;
+  }
+}

@@ -1,0 +1,202 @@
+.container .home {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2em 2em;
+  padding-top: 3em;
+}
+.container .home .txHeader {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  align-items: center;
+}
+.container .home .txHeader h1 {
+  font-size: 4em;
+  color: var(--primary);
+}
+.container .home .txHeader .stage {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 2em;
+  overflow: hidden;
+  color: var(--primary);
+}
+.container .home .txHeader .stage {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  overflow: hidden;
+  color: var(--text);
+}
+.container .home .txHeader .stage img {
+  object-fit: contain;
+  height: 2em;
+}
+.container .home .txHeader .stage h2 {
+  font-size: 1.2em;
+}
+.container .home .txHeader .stage .icon {
+  font-size: 1.2em;
+}
+.container .home .coreCont {
+  width: 100%;
+  position: relative;
+  margin-top: 4em;
+  outline: none;
+  /* border: 2px solid; */
+}
+.container .home .coreCont .core {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 4;
+  outline: none;
+  pointer-events: none;
+}
+
+.container .home .coreCont .tool {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  object-fit: contain;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.container .home .coreCont .particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  object-fit: contain;
+  width: 25px;
+  height: 25px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  transition: left 0.5s, top 0.5s, opacity 0.5s;
+  z-index: 6;
+}
+/*  */
+.container .home .progressCont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+}
+.container .home .progressCont h4 {
+  font-size: 2em;
+  /* display: flex;
+    align-items: center; */
+}
+.container .home .progressCont h4 span:first-child {
+  font-size: 2em;
+}
+.container .home .progressCont .progressBarCont {
+  width: 80%;
+  height: 20px;
+  border-radius: 100px;
+  position: relative;
+  background-color: var(--header);
+}
+.container .home .progressCont .progressBarCont .progressBar {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  height: 20px;
+  border-radius: inherit;
+  background-color: var(--primary);
+}
+
+/* SMALLER DEVICE */
+@media (max-width: 320px) {
+  .container .home {
+    font-size: 0.7em;
+  }
+  .container .home .coreCont {
+    width: 100%;
+    position: relative;
+    margin-top: 4em;
+    outline: none;
+  }
+  .container .home .coreCont .core {
+    object-fit: contain;
+    width: 100%;
+    height: 220px;
+  }
+
+  .container .home .coreCont .tool {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    object-fit: contain;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 0.3s ease;
+  }
+
+  .container .home .coreCont .particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    object-fit: contain;
+    width: 25px;
+    height: 25px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    transition: left 0.5s, top 0.5s, opacity 0.5s;
+    z-index: 6;
+  }
+  /*  */
+  .container .home .progressCont {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+  }
+  .container .home .progressCont h4 {
+    font-size: 2em;
+    /* display: flex;
+        align-items: center; */
+  }
+  .container .home .progressCont h4 span:first-child {
+    font-size: 2em;
+  }
+  .container .home .progressCont .progressBarCont {
+    width: 80%;
+    height: 20px;
+    border-radius: 100px;
+    position: relative;
+    background-color: var(--header);
+  }
+  .container .home .progressCont .progressBarCont .progressBar {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 20px;
+    border-radius: inherit;
+    background-color: var(--primary);
+  }
+}

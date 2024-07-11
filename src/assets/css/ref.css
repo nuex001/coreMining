@@ -1,0 +1,137 @@
+.container .ref {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2em 2em;
+  padding-top: 3em;
+}
+.container .ref h1 {
+  font-size: 4em;
+  color: var(--primary);
+  margin-top: 1em;
+  text-align: center;
+}
+.container .ref .copyCont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1em 1.5em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.container .ref .copyCont ul {
+  width: calc(100% - 120px);
+}
+.container .ref .copyCont ul h2 {
+  color: var(--primary);
+  font-size: 2em;
+}
+.container .ref .copyCont ul p {
+  font-size: 1.4em;
+  word-break: break-all;
+  color: var(--text);
+  margin-top: 0.4em;
+}
+.container .ref .copyCont .btn {
+  display: inline-block;
+  font-size: 1.4em;
+  padding: 0.7em 2em;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--primary);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.container .ref .rows {
+  display: flex;
+  max-height: 400px;
+  overflow-y: scroll;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em 1.5em;
+  padding-top: 2em;
+  gap: 2em;
+  /* border: 2px solid; */
+}
+.container .ref h3 {
+  color: var(--primary);
+  font-size: 2em;
+  margin-top: 0.5em;
+}
+.container .ref .box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em 1.5em;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+}
+.container .ref .box h5 {
+  color: var(--text);
+  font-size: 2em;
+  margin-top: 0.5em;
+}
+.container .ref .box h4 {
+  color: var(--primary);
+}
+.container .ref .box .txt {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  color: var(--text);
+  font-size: 1.6em;
+}
+.container .ref .box .txt .stage {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+.container .ref .box .txt .stage img {
+  object-fit: contain;
+  height: 20px;
+}
+
+/* SMALLER DEVICE */
+@media (max-width: 320px) {
+  .container .ref {
+    padding-top: 2em;
+  }
+  .container .ref h1 {
+    font-size: 2em;
+    margin-top: 0em;
+  }
+
+  .container .ref .copyCont ul {
+    width: calc(100% - 80px);
+  }
+  .container .ref .copyCont ul h2 {
+    font-size: 1em;
+  }
+  .container .ref .copyCont ul p {
+    font-size: 1em;
+    word-break: break-all;
+    color: var(--text);
+    margin-top: 0.4em;
+  }
+  .container .ref .copyCont .btn {
+    font-size: 1em;
+    padding: 0.7em 1.5em;
+  }
+  .container .ref .rows {
+    max-height: 280px;
+    padding: 1em 1.5em;
+    padding-top: 16em;
+  }
+  .container .ref h3 {
+    font-size: 1.4em;
+    margin-bottom: 0.5em;
+  }
+  .container .ref .box h5 {
+    font-size: 1.4em;
+  }
+  .container .ref .box .txt {
+    font-size: 1.4em;
+  }
+}
