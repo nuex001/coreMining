@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import  "../../assets/css/home.css";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import "../../assets/css/home.css";
 import novice from "../../assets/images/novice.svg";
 import experience from "../../assets/images/experience.svg";
 import Journeyman from "../../assets/images/Journeyman.svg";
@@ -7,15 +7,24 @@ import Master from "../../assets/images/Master.svg";
 import Veteran from "../../assets/images/Veteran.svg";
 import rock from "../../assets/images/rock.svg";
 // import particle from "../../assets/images/particle.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { getRandomInt } from "../../utils/utils";
+import { useSelector, useDispatch } from "react-redux";
+import { getUser, updatePoints } from "../../redux/CoreMining";
+
 function Home() {
   const MAX_SCORE = 2500;
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.CoreMining);
   const [score, setScore] = useState(MAX_SCORE);
-  const [points, setPoints] = useState(2000000);
+  const [points, setPoints] = useState(0);
+  const [earnedPoint, setEarnedPoint] = useState(0);
   const coreContRef = useRef();
   const toolRef = useRef();
+  const earnedpoint = useRef(earnedPoint);
+  const { pathname } = useLocation();
+
   const [stages, setStages] = useState([
     "Novice",
     "Experienced",
@@ -33,7 +42,7 @@ function Home() {
 
   const createParticles = (e) => {
     const container = coreContRef.current;
-    const particleCount = 2; // Number of particles to create
+    const particleCount = user ? (user.stage + 1) * 2 : 2; // Number of particles to create
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("img");
@@ -67,68 +76,165 @@ function Home() {
     const newScore = score - particleCount;
     setScore((prevCount) => prevCount - particleCount);
     setPoints((prevPoints) => prevPoints + particleCount);
+    setEarnedPoint((prevPoints) => prevPoints + particleCount);
+    if (user) {
+      localStorage.setItem(`${user.username}_tapCount`, newScore.toString());
+      localStorage.setItem(
+        `${user.username}_lastUpdated`,
+        Date.now().toString()
+      );
+    }
   };
+  const RechargeTime = [
+    1500, 1400, 1300, 1200, 1100,
+    1000, 900, 800, 700, 600,
+    500, 400, 300, 200, 100
+  ];
 
   // tappingCount Login
   useEffect(() => {
-    const storedTapCount = localStorage.getItem(`${"emma"}_tapCount`);
-    const storedLastUpdated = localStorage.getItem(`${"emma"}_lastUpdated`);
+    if (user) {
+      const MaxscoreStore = localStorage.getItem(`${user.username}_tapCount`);
+      if (MaxscoreStore) {
+        const storedTapCount = localStorage.getItem(
+          `${user.username}_tapCount`
+        );
+        const storedLastUpdated = localStorage.getItem(
+          `${user.username}_lastUpdated`
+        );
+        if (storedTapCount && storedLastUpdated) {
+          const now = Date.now();
+          const lastUpdated = parseInt(storedLastUpdated, 10);
+          const elapsedTime = Math.floor(
+            (now - lastUpdated) / RechargeTime[user.rechargeLvl]
+          ); // Time in seconds
+          // console.log(elapsedTime);
+          let newTapCount = parseInt(storedTapCount, 10) + elapsedTime;
+          if (newTapCount > MAX_SCORE) newTapCount = MAX_SCORE;
 
-    if (storedTapCount && storedLastUpdated) {
-      const now = Date.now();
-      const lastUpdated = parseInt(storedLastUpdated, 10);
-      const elapsedTime = Math.floor((now - lastUpdated) / MAX_SCORE); // Time in seconds
-      let newTapCount = parseInt(storedTapCount, 10) + elapsedTime;
-      if (newTapCount > MAX_SCORE) newTapCount = MAX_SCORE;
-
-      setScore(newTapCount);
-      localStorage.setItem(`${"emma"}_tapCount`, newTapCount.toString());
+          setScore(newTapCount);
+          localStorage.setItem(
+            `${user.username}_tapCount`,
+            newTapCount.toString()
+          );
+        }
+      } else {
+        const MaxscoreStore = localStorage.setItem(
+          `${user.username}_tapCount`,
+          score
+        );
+      }
     }
-  }, []);
+  }, [user]);
 
-  // tappingCount
+  // tappingCount Recovery
   useEffect(() => {
-    const interval = setInterval(() => {
-      setScore((prevCount) => {
-        const newCount = prevCount < MAX_SCORE ? prevCount + 1 : prevCount;
-        localStorage.setItem(`${"emma"}_tapCount`, newCount.toString());
-        localStorage.setItem(`${"emma"}_lastUpdated`, Date.now().toString());
-        return newCount;
-      });
-    }, MAX_SCORE);
+    if (user) {
+      const time = RechargeTime[user.rechargeLvl];
+      const storedScore = localStorage.getItem(`${user.username}_tapCount`);
+      if (storedScore) {
+        setScore(parseInt(storedScore, 10));
+      } else {
+        localStorage.setItem(`${user.username}_tapCount`, "0");
+      }
 
-    return () => clearInterval(interval);
-  }, []);
+      const incrCount = (user.stage + 1) * 2;
+      const interval = setInterval(() => {
+        setScore((prevCount) => {
+          // console.log(prevCount>=MAX_SCORE);
+          if (prevCount >= MAX_SCORE) {
+            return MAX_SCORE; // Ensure score doesn't exceed MAX_SCORE
+          } else {
+            const newCount = prevCount + incrCount;
+            localStorage.setItem(
+              `${user.username}_tapCount`,
+              newCount.toString()
+            );
+            localStorage.setItem(
+              `${user.username}_lastUpdated`,
+              Date.now().toString()
+            );
+            return newCount;
+          }
+        });
+      }, time); // Adjust interval timing as needed
+      return () => clearInterval(interval); // Cleanup function to clear interval on unmount
+    }
+  }, [user]);
 
   // Tool follow
-  useEffect(() => {
+  const handleMouseMove = (e) => {
     const container = coreContRef.current;
     const tool = toolRef.current;
-    container.addEventListener("mousemove", function (e) {
-      // console.log(tool);
-      // Adjust tool position relative to container
-      const rect = container.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-      // Update tool position
-      tool.style.left = mouseX + "px";
-      tool.style.top = mouseY + "px";
-    });
+
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    tool.style.left = mouseX + "px";
+    tool.style.top = mouseY + "px";
+  };
+
+  useEffect(() => {
+    const container = coreContRef.current;
+
+    container.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
+
+  // Get  user
+  useEffect(() => {
+    dispatch(getUser());
+  }, [pathname]);
+
+  //set POINTS
+  useEffect(() => {
+    if (user) {
+      setPoints(user.point);
+    }
+  }, [user]);
+
+  // save earnedPoint state value to ref
+  useEffect(() => {
+    earnedpoint.current = earnedPoint;
+  }, [earnedPoint]);
+
+  // Update points on unmount
+  useEffect(
+    () => () => {
+      // console.log(earnedpoint.current);
+      if (earnedpoint.current > 0) {
+        return dispatch(updatePoints({ earnedPoint: earnedpoint.current }));
+      }
+    },
+    []
+  );
+
   return (
     <div className="home">
-      <div className="txHeader">
-        <h1>{points}</h1>
-        <Link to="/league" className="stage">
-          <img src={stageImg[0]} alt={stages[0]} />
-          <h2>{stages[0]}</h2>
-          <MdKeyboardDoubleArrowRight className="icon" />
-        </Link>
-      </div>
+      {user && (
+        <div className="txHeader">
+          <h1>{points}</h1>
+          <Link to="/league" className="stage">
+            <img src={stageImg[user.stage]} alt={stages[user.stage]} />
+            <h2>{stages[user.stage]}</h2>
+            <MdKeyboardDoubleArrowRight className="icon" />
+          </Link>
+        </div>
+      )}
       <div className="coreCont" ref={coreContRef} onClick={createParticles}>
         <img src={rock} alt="rock" className="core" />
         {/* <img src={particle} alt="particle" className="particle" /> */}
-        <img src={stageImg[0]} alt={stages[0]} className="tool" ref={toolRef} />
+        {user && (
+          <img
+            src={stageImg[user.stage]}
+            alt={stages[user.stage]}
+            className="tool"
+            ref={toolRef}
+          />
+        )}
       </div>
       <div className="progressCont">
         <h4>

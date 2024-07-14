@@ -48,7 +48,7 @@ body {
 
 .container nav {
   position: fixed;
-  bottom: 5%;
+  bottom: 1%;
   left: 0%;
   width: 100%;
   height: 8em;
@@ -56,7 +56,8 @@ body {
   align-items: center;
   padding: 1em 2em;
   border-radius: 20px;
-  z-index: 999999;
+  z-index: 8888888;
+  background: var(--bg);
   /* border: 2px solid; */
 }
 .container nav ul {
@@ -84,6 +85,40 @@ body {
 .container nav ul li a.active {
   color: var(--bg);
   background: var(--primary);
+}
+/*  */
+.loaderCont {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  z-index: 9999999999;
+}
+.loader {
+  width: 70px;
+  aspect-ratio: 1;
+  --_g: no-repeat radial-gradient(farthest-side, #f49212 90%, #0000);
+  background: var(--_g), var(--_g), var(--_g), var(--_g);
+  background-size: 40% 40%;
+  animation: l46 1s infinite;
+}
+@keyframes l46 {
+  0% {
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  }
+  40%,
+  50% {
+    background-position: 100% 100%, 100% 0, 0 0, 0 100%;
+  }
+  90%,
+  100% {
+    background-position: 100% 100%, 0 100%, 0 0, 100% 0;
+  }
 }
 
 /* SMALLER DEVICE */

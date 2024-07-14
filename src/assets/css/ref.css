@@ -50,8 +50,9 @@
   align-items: center;
   justify-content: center;
   padding: 1em 1.5em;
-  padding-top: 2em;
+  padding-top: 8em;
   gap: 2em;
+  padding-bottom: 6em;
   /* border: 2px solid; */
 }
 .container .ref h3 {
@@ -92,6 +93,7 @@
   object-fit: contain;
   height: 20px;
 }
+
 
 /* SMALLER DEVICE */
 @media (max-width: 320px) {

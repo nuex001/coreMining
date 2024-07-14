@@ -10,8 +10,22 @@ import { Link } from "react-router-dom";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { SiTask } from "react-icons/si";
 import { CiCircleRemove } from "react-icons/ci";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  claimTask,
+  clear,
+  fetchTasks,
+  getUser,
+} from "../../redux/CoreMining";
+import { errorMsgs, successMsg } from "../../utils/utils";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Task() {
+  const dispatch = useDispatch();
+  const { user, tasks, error, success } = useSelector(
+    (state) => state.CoreMining
+  );
   const [stages, setStages] = useState([
     "Novice",
     "Experienced",
@@ -26,34 +40,32 @@ function Task() {
     Master,
     Veteran,
   ]);
-  const [points, setPoints] = useState(2000000);
   const [check, setCheck] = useState(false);
-
   const [task, setTask] = useState(null);
+  const [userId, setUserId] = useState(6393211028);
 
-  const [tasks, setTasks] = useState([
-    {
-      title: "Join Our Youtube Channel",
-      description: "Join Our Youtube Channel to earn 5000000 points",
-      point: 5000000,
-      link: "https://t.me/News_Pointsbot",
-      claimed: false,
-    },
-    {
-      title: "Follow our Official X account",
-      description: "Follow our Official X account to earn 5000000 points",
-      point: 5000000,
-      link: "https://x.com/nuelyoungtech",
-      claimed: false,
-    },
-    {
-      title: "Follow our Devs X account",
-      description: "Follow our Devs X account to earn 5000 points",
-      point: 5000,
-      link: "https://x.com/nuelyoungtech",
-      claimed: false,
-    },
-  ]);
+  // FECTH Tasks
+  const fetchuserId = async () => {
+    try {
+      const tg = WebApp;
+
+      // Access initDataUnsafe
+      const initDataUnsafe = tg.initDataUnsafe;
+      const user = initDataUnsafe?.user;
+      const referrerIdParam = new URLSearchParams(window.location.search).get(
+        "referrerId"
+      );
+
+      if (user) {
+        // console.log(user)
+        const { id } = user;
+        setUserId(id);
+      }
+    } catch (error) {
+      console.log(error);
+      errorMsgs("Server Error");
+    }
+  };
 
   const showTask = (idx) => {
     setTask(tasks[idx]);
@@ -62,16 +74,45 @@ function Task() {
     setCheck(false);
     setTask(null);
   };
+  // Claim Task
+  const claimtask = async (e) => {
+    e.preventDefault();
+    const taskId = e.target.getAttribute("data-id");
+    dispatch(claimTask({ taskId, userId }));
+    setCheck(false);
+    setTask(null);
+  };
+
+  //
+  useEffect(() => {
+    if (error !== null) {
+      errorMsgs(error.err);
+    } else {
+      successMsg(success);
+      dispatch(fetchTasks());
+    }
+    dispatch(clear());
+  }, [success, error]);
+
+  // Get User & Refs
+  useEffect(() => {
+    dispatch(fetchTasks());
+    dispatch(getUser());
+  }, []);
+
   return (
     <div className="task">
-      <div className="txHeader">
-        <h1>{points}</h1>
-        <Link to="#" className="stage">
-          <img src={stageImg[0]} alt={stages[0]} />
-          <h2>{stages[0]}</h2>
-          <MdKeyboardDoubleArrowRight className="icon" />
-        </Link>
-      </div>
+      <ToastContainer/>
+      {user && (
+        <div className="txHeader">
+          <h1>{user.point}</h1>
+          <Link to="/league" className="stage">
+            <img src={stageImg[user.stage]} alt={stages[user.stage]} />
+            <h2>{stages[user.stage]}</h2>
+            <MdKeyboardDoubleArrowRight className="icon" />
+          </Link>
+        </div>
+      )}
       <main>
         <h1>OUR TASKS</h1>
         <div className="rows">
@@ -86,8 +127,8 @@ function Task() {
               >
                 <SiTask className="icon" />
                 <ul>
-                  <li>{task.title}</li>
-                  <li>{task.point}</li>
+                  <li>{task.description}</li>
+                  <li>{task.points}</li>
                   <MdKeyboardDoubleArrowRight className="arrw" />
                 </ul>
               </div>
@@ -99,12 +140,12 @@ function Task() {
               <CiCircleRemove className="cancel" onClick={closeTask} />
               <SiTask className="icon" />
               <ul>
-                <li>{task.title}</li>
-                <li>{task.point}</li>
+                <li>{task.description}</li>
+                <li>{task.points}</li>
               </ul>
               {!check ? (
                 <a
-                  href="#"
+                  href={task.link}
                   target="_blank"
                   className="btn"
                   onClick={(e) => {
@@ -114,7 +155,9 @@ function Task() {
                   Check
                 </a>
               ) : (
-                <div className="btn">Claim</div>
+                <div className="btn" data-id={task._id} onClick={claimtask}>
+                  Claim
+                </div>
               )}
             </div>
           </div>
