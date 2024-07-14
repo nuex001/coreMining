@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import setAuthToken from "../utils/setAuthToken";
 
 // initializing state
 const initialState = {
@@ -26,7 +27,8 @@ export const logorsign = createAsyncThunk(
       sessionStorage.setItem("token", response.data.jwt);
       sessionStorage.setItem("role", response.data.role);
       sessionStorage.setItem("myId", response.data.myId);
-      console.log(response);
+      setAuthToken(response.data.jwt);
+      // console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);

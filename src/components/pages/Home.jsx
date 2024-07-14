@@ -86,9 +86,8 @@ function Home() {
     }
   };
   const RechargeTime = [
-    1500, 1400, 1300, 1200, 1100,
-    1000, 900, 800, 700, 600,
-    500, 400, 300, 200, 100
+    1500, 1400, 1300, 1200, 1100, 1000, 900, 800, 700, 600, 500, 400, 300, 200,
+    100,
   ];
 
   // tappingCount Login
@@ -185,9 +184,9 @@ function Home() {
   }, []);
 
   // Get  user
-  useEffect(() => {
-    dispatch(getUser());
-  }, [pathname]);
+  // useEffect(() => {
+  //   dispatch(getUser());
+  // }, [pathname]);
 
   //set POINTS
   useEffect(() => {
@@ -202,15 +201,14 @@ function Home() {
   }, [earnedPoint]);
 
   // Update points on unmount
-  useEffect(
-    () => () => {
-      // console.log(earnedpoint.current);
+  useEffect(() => {
+    return () => {
       if (earnedpoint.current > 0) {
-        return dispatch(updatePoints({ earnedPoint: earnedpoint.current }));
+        dispatch(updatePoints({ earnedPoint: earnedpoint.current }));
+        // dispatch(getUser());
       }
-    },
-    []
-  );
+    };
+  }, []);
 
   return (
     <div className="home">
