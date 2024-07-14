@@ -33,7 +33,7 @@ mongoose
     console.log(err);
   });
 
-const web_link = "https://7246-185-183-33-19.ngrok-free.app";
+const web_link = "https://coremining.netlify.app/";
 const bot_link = "https://t.me/News_Pointsbot";
 
 bot.start((ctx) => {
