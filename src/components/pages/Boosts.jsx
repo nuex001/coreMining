@@ -24,7 +24,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function Boosts() {
   const dispatch = useDispatch();
-  const { user,Userpoint, error, success } = useSelector((state) => state.CoreMining);
+  const { user, Userpoint, error, success } = useSelector(
+    (state) => state.CoreMining
+  );
   const [stages, setStages] = useState([
     "Novice",
     "Experienced",
@@ -122,9 +124,10 @@ function Boosts() {
 
   //
   useEffect(() => {
-    if (error !== null) {
+    // console.log(error);
+    if (error !== null && error) {
       errorMsgs(error.err);
-    } else {
+    } else if (success) {
       successMsg(success);
       dispatch(getUser());
     }

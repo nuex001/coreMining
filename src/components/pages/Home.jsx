@@ -187,11 +187,21 @@ function Home() {
 
   // Get  user
   useEffect(() => {
-   if (!user) {
-     dispatch(getUser());
-   }
-  }, [pathname]);
-
+    if (!user) {
+      dispatch(getUser());
+    }
+    if (user) {
+      const unsaved = localStorage.getItem(
+        `${user.username}_unsaved`,
+        earnedpoint.current
+      );
+      if (unsaved) {
+        console.log(Number(unsaved));
+        dispatch(updatePoints({ earnedPoint: Number(unsaved) }));
+        localStorage.removeItem(`${user.username}_unsaved`);
+      }
+    }
+  }, [user]);
 
   // save earnedPoint state value to ref
   useEffect(() => {
@@ -205,6 +215,17 @@ function Home() {
         dispatch(updatePoints({ earnedPoint: earnedpoint.current }));
         // dispatch(getUser());
       }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      localStorage.setItem(`${user.username}_unsaved`, earnedpoint.current);
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
 

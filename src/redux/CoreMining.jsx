@@ -259,9 +259,8 @@ const CoreMiningSlice = createSlice({
     builder.addCase(updatePoints.fulfilled, (state, action) => {
       // console.log(action.payload.msg);
       state.loading = false;
-      // state.user = action.payload.msg;
+      state.user = action.payload.msg;
       state.Userpoint = action.payload.msg.point;
-      state.error = null;
     });
     builder.addCase(updatePoints.rejected, (state, action) => {
       state.loading = false;

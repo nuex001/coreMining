@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Task() {
   const dispatch = useDispatch();
-  const { user, tasks, error, success,Userpoint } = useSelector(
+  const { user, tasks, error, success, Userpoint } = useSelector(
     (state) => state.CoreMining
   );
   const [stages, setStages] = useState([
@@ -82,7 +82,7 @@ function Task() {
   useEffect(() => {
     if (error !== null) {
       errorMsgs(error.err);
-    } else {
+    } else if (success === "Claimed successfully") {
       successMsg(success);
       dispatch(fetchTasks());
       dispatch(getUser());
