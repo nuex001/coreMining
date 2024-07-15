@@ -8,6 +8,7 @@ const initialState = {
   user: null,
   tasks: [],
   refs: [],
+  Userpoint: 0,
   error: null,
   success: null,
 };
@@ -149,7 +150,9 @@ export const rechargLevel = createAsyncThunk(
   "CoreMining/rechargLevel",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`https://coremining.onrender.com/api/user/recharge`);
+      const response = await axios.put(
+        `https://coremining.onrender.com/api/user/recharge`
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -169,6 +172,12 @@ const CoreMiningSlice = createSlice({
         error: null,
       };
     },
+    addPoint(state, action) {
+      return {
+        ...state,
+        Userpoint: state.Userpoint + action.payload,
+      };
+    },
   },
   // working for async fetching data
   extraReducers: (builder) => {
@@ -177,8 +186,10 @@ const CoreMiningSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(logorsign.fulfilled, (state, action) => {
+      // console.log(action.payload);
       state.loading = false;
       state.user = action.payload.user;
+      state.Userpoint = action.payload.user.point;
       state.error = null;
     });
     builder.addCase(logorsign.rejected, (state, action) => {
@@ -194,6 +205,7 @@ const CoreMiningSlice = createSlice({
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
+      state.Userpoint = action.payload.point;
       state.error = null;
     });
     builder.addCase(getUser.rejected, (state, action) => {
@@ -236,8 +248,10 @@ const CoreMiningSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(updatePoints.fulfilled, (state, action) => {
+      // console.log(action.payload.msg);
       state.loading = false;
       state.user = action.payload.msg;
+      state.Userpoint = action.payload.msg.point;
       state.error = null;
     });
     builder.addCase(updatePoints.rejected, (state, action) => {
@@ -307,5 +321,5 @@ const CoreMiningSlice = createSlice({
     });
   },
 });
-export const { clear } = CoreMiningSlice.actions;
+export const { clear, addPoint } = CoreMiningSlice.actions;
 export default CoreMiningSlice.reducer;

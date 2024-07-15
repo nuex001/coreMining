@@ -24,7 +24,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function Boosts() {
   const dispatch = useDispatch();
-  const { user, error, success } = useSelector((state) => state.CoreMining);
+  const { user,Userpoint, error, success } = useSelector((state) => state.CoreMining);
   const [stages, setStages] = useState([
     "Novice",
     "Experienced",
@@ -150,7 +150,7 @@ function Boosts() {
       <ToastContainer />
       {user && (
         <div className="txHeader">
-          <h1>{user.point}</h1>
+          <h1>{Userpoint}</h1>
           <Link to="/league" className="stage">
             <img src={stageImg[user.stage]} alt={stages[user.stage]} />
             <h2>{stages[user.stage]}</h2>

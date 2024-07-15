@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Task() {
   const dispatch = useDispatch();
-  const { user, tasks, error, success } = useSelector(
+  const { user, tasks, error, success,Userpoint } = useSelector(
     (state) => state.CoreMining
   );
   const [stages, setStages] = useState([
@@ -101,7 +101,7 @@ function Task() {
       <ToastContainer />
       {user && (
         <div className="txHeader">
-          <h1>{user.point}</h1>
+          <h1>{Userpoint}</h1>
           <Link to="/league" className="stage">
             <img src={stageImg[user.stage]} alt={stages[user.stage]} />
             <h2>{stages[user.stage]}</h2>

@@ -11,14 +11,14 @@ import { Link, useLocation } from "react-router-dom";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { getRandomInt } from "../../utils/utils";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser, updatePoints } from "../../redux/CoreMining";
+import { addPoint, getUser, updatePoints } from "../../redux/CoreMining";
 
 function Home() {
   const MAX_SCORE = 2500;
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.CoreMining);
+  const { user, Userpoint } = useSelector((state) => state.CoreMining);
   const [score, setScore] = useState(MAX_SCORE);
-  const [points, setPoints] = useState(0);
+  // const [points, setPoints] = useState(0);
   const [earnedPoint, setEarnedPoint] = useState(0);
   const coreContRef = useRef();
   const toolRef = useRef();
@@ -75,7 +75,9 @@ function Home() {
     }
     const newScore = score - particleCount;
     setScore((prevCount) => prevCount - particleCount);
-    setPoints((prevPoints) => prevPoints + particleCount);
+    // setPoints((prevPoints) => prevPoints + particleCount);
+    // console.log(particleCount);
+    dispatch(addPoint(particleCount));
     setEarnedPoint((prevPoints) => prevPoints + particleCount);
     if (user) {
       localStorage.setItem(`${user.username}_tapCount`, newScore.toString());
@@ -184,16 +186,12 @@ function Home() {
   }, []);
 
   // Get  user
-  // useEffect(() => {
-  //   dispatch(getUser());
-  // }, [pathname]);
-
-  //set POINTS
   useEffect(() => {
-    if (user) {
-      setPoints(user.point);
-    }
-  }, [user]);
+   if (!user) {
+     dispatch(getUser());
+   }
+  }, [pathname]);
+
 
   // save earnedPoint state value to ref
   useEffect(() => {
@@ -214,7 +212,7 @@ function Home() {
     <div className="home">
       {user && (
         <div className="txHeader">
-          <h1>{points}</h1>
+          <h1>{Userpoint}</h1>
           <Link to="/league" className="stage">
             <img src={stageImg[user.stage]} alt={stages[user.stage]} />
             <h2>{stages[user.stage]}</h2>
