@@ -63,6 +63,7 @@ export const updatePoints = createAsyncThunk(
         `https://coremining.onrender.com/api/user/`,
         form
       );
+      localStorage.removeItem(`${response?.data.msg?.username}_tap`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -195,10 +196,12 @@ const CoreMiningSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(logorsign.fulfilled, (state, action) => {
-      // console.log(action.payload);
+      const tap = localStorage.getItem(`${action.payload.user?.username}_tap`);
       state.loading = false;
       state.user = action.payload.user;
-      state.Userpoint = action.payload.user.point;
+      state.Userpoint = tap
+        ? action.payload.user.point + Number(tap)
+        : action.payload.user.point;
       state.error = null;
     });
     builder.addCase(logorsign.rejected, (state, action) => {
@@ -212,9 +215,10 @@ const CoreMiningSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
+      const tap = localStorage.getItem(`${action.payload?.username}_tap`);
       state.loading = false;
       state.user = action.payload;
-      state.Userpoint = action.payload.point;
+      state.Userpoint = tap ? action.payload.point + Number(tap) : action.payload.point;
       state.error = null;
     });
     builder.addCase(getUser.rejected, (state, action) => {

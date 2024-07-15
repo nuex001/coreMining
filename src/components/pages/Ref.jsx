@@ -32,7 +32,7 @@ function Ref() {
 
   const copyLink = (e) => {
     navigator.clipboard.writeText(
-      `https://t.me/News_Pointsbot?start=${sessionStorage.getItem("myId")}`
+      `https://t.me/coremining_bot_bot?start=${sessionStorage.getItem("myId")}`
     );
     e.target.innerHTML = "Copied";
     timer.current = setTimeout(() => {
@@ -58,7 +58,7 @@ function Ref() {
         <ul>
           <h2>My invite Link</h2>
           <p>
-            https://t.me/News_Pointsbot?start={sessionStorage.getItem("myId")}
+          https://t.me/coremining_bot_bot?start={sessionStorage.getItem("myId")}
           </p>
         </ul>
         <div className="btn" onClick={copyLink} ref={copyBtnRef}>

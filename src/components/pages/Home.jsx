@@ -76,7 +76,7 @@ function Home() {
     const newScore = score - particleCount;
     setScore((prevCount) => prevCount - particleCount);
     // setPoints((prevPoints) => prevPoints + particleCount);
-    // console.log(particleCount);
+    localStorage.setItem(`${user.username}_tap`,earnedpoint.current + particleCount);
     dispatch(addPoint(particleCount));
     setEarnedPoint((prevPoints) => prevPoints + particleCount);
     if (user) {
@@ -190,17 +190,14 @@ function Home() {
     if (!user) {
       dispatch(getUser());
     }
-    if (user) {
-      const unsaved = localStorage.getItem(
-        `${user.username}_unsaved`,
-        earnedpoint.current
-      );
-      if (unsaved) {
-        console.log(Number(unsaved));
-        dispatch(updatePoints({ earnedPoint: Number(unsaved) }));
-        localStorage.removeItem(`${user.username}_unsaved`);
-      }
+   if (user) {
+    const unsaved = localStorage.getItem(`${user.username}_tap`);
+    if (unsaved) {
+      console.log(Number(unsaved));
+      dispatch(updatePoints({earnedPoint:Number(unsaved)}));
+      localStorage.removeItem(`${user.username}_tap`);
     }
+   }
   }, [user]);
 
   // save earnedPoint state value to ref
@@ -218,16 +215,6 @@ function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      localStorage.setItem(`${user.username}_unsaved`, earnedpoint.current);
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <div className="home">
