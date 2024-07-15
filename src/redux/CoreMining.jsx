@@ -53,7 +53,7 @@ export const getUser = createAsyncThunk(
 
 // UPDATE Points
 export const updatePoints = createAsyncThunk(
-  "CoreMining/updatepoints",
+  "CoreMining/updatePoints",
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.put(`https://coremining.onrender.com/api/user/`, form);
@@ -226,6 +226,21 @@ const CoreMiningSlice = createSlice({
       state.error = null;
     });
     builder.addCase(fetchTasks.rejected, (state, action) => {
+      state.loading = false;
+      state.success = null;
+      state.error = action.payload;
+    });
+
+    // update points
+    builder.addCase(updatePoints.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updatePoints.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.msg;
+      state.error = null;
+    });
+    builder.addCase(updatePoints.rejected, (state, action) => {
       state.loading = false;
       state.success = null;
       state.error = action.payload;

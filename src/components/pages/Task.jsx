@@ -11,12 +11,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { SiTask } from "react-icons/si";
 import { CiCircleRemove } from "react-icons/ci";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  claimTask,
-  clear,
-  fetchTasks,
-  getUser,
-} from "../../redux/CoreMining";
+import { claimTask, clear, fetchTasks, getUser } from "../../redux/CoreMining";
 import { errorMsgs, successMsg } from "../../utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,7 +37,7 @@ function Task() {
   ]);
   const [check, setCheck] = useState(false);
   const [task, setTask] = useState(null);
-  const [userId, setUserId] = useState(6393211028);
+  const [userId, setUserId] = useState(null);
 
   // FECTH Tasks
   const fetchuserId = async () => {
@@ -90,6 +85,7 @@ function Task() {
     } else {
       successMsg(success);
       dispatch(fetchTasks());
+      dispatch(getUser());
     }
     dispatch(clear());
   }, [success, error]);
@@ -102,7 +98,7 @@ function Task() {
 
   return (
     <div className="task">
-      <ToastContainer/>
+      <ToastContainer />
       {user && (
         <div className="txHeader">
           <h1>{user.point}</h1>
