@@ -142,7 +142,9 @@ function Boosts() {
 
   // Get User
   useEffect(() => {
-    dispatch(getUser());
+    if (!user) {
+      dispatch(getUser());
+    }
   }, []);
 
   return (

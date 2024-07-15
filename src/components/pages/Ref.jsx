@@ -45,7 +45,9 @@ function Ref() {
   // Get User & Refs
   useEffect(() => {
     dispatch(fetchRefs());
+   if (!user) {
     dispatch(getUser());
+   }
     return () => clearTimeout(timer.current);
   }, []);
 
