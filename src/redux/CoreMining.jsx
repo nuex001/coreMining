@@ -43,7 +43,9 @@ export const getUser = createAsyncThunk(
   "CoreMining/getUser",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://coremining.onrender.com/api/user/`);
+      const response = await axios.get(
+        `https://coremining.onrender.com/api/user/`
+      );
       return response.data; // data is the last
     } catch (error) {
       console.log(error);
@@ -57,7 +59,10 @@ export const updatePoints = createAsyncThunk(
   "CoreMining/updatePoints",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`https://coremining.onrender.com/api/user/`, form);
+      const response = await axios.put(
+        `https://coremining.onrender.com/api/user/`,
+        form
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -85,7 +90,9 @@ export const fetchTasks = createAsyncThunk(
   "CoreMining/fetchTasks",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://coremining.onrender.com/api/task/");
+      const response = await axios.get(
+        "https://coremining.onrender.com/api/task/"
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -137,7 +144,9 @@ export const equipTools = createAsyncThunk(
   "CoreMining/equipTools",
   async (form, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`https://coremining.onrender.com/api/user/tools`);
+      const response = await axios.put(
+        `https://coremining.onrender.com/api/user/tools`
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -250,8 +259,8 @@ const CoreMiningSlice = createSlice({
     builder.addCase(updatePoints.fulfilled, (state, action) => {
       // console.log(action.payload.msg);
       state.loading = false;
-      state.user = action.payload.msg;
-      // state.Userpoint = action.payload.msg.point;
+      // state.user = action.payload.msg;
+      state.Userpoint = action.payload.msg.point;
       state.error = null;
     });
     builder.addCase(updatePoints.rejected, (state, action) => {
