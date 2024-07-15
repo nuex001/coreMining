@@ -128,13 +128,15 @@ router.put("/", auth, async (req, res) => {
   try {
     const { earnedPoint } = req.body;
     const { id } = req.user;
-    const user = await User.findById(id);
+    const checkuser = await User.findById(id);
+    // console.log(checkuser);
     // console.log(id);
-    if (!user) return res.status(404).json({ err: "No user was found" });
+    if (!checkuser) return res.status(404).json({ err: "No user was found" });
 
     await User.findByIdAndUpdate(id, { $inc: { point: earnedPoint } });
-
-    res.json({ msg: "Point updated successfully" });
+    const user = await User.findById(id).select("-password -refferals");
+    // console.log(user);
+    res.json({ msg: user });
   } catch (error) {
     console.log(error);
     res.status(500).json(error.message);
@@ -180,9 +182,8 @@ router.put("/tools", auth, async (req, res) => {
 ]
  *  */
 const recharge_level = [
-  100000, 400000, 700000, 1000000, 1300000,
-  1600000, 1900000, 2200000, 2500000, 2800000,
-  3100000, 3400000, 3700000, 4000000, 4300000
+  100000, 400000, 700000, 1000000, 1300000, 1600000, 1900000, 2200000, 2500000,
+  2800000, 3100000, 3400000, 3700000, 4000000, 4300000,
 ];
 
 //BUY TOOLS
