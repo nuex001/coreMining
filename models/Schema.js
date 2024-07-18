@@ -18,6 +18,10 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
+    address: {
+      type: String,
+      default: "",
+    },
     refferals: [
       {
         type: Schema.Types.ObjectId,

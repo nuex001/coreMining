@@ -204,6 +204,21 @@ router.put("/recharge", auth, async (req, res) => {
   }
 });
 
+// Update Address
+router.put("/address", auth, async (req, res) => {
+  try {
+    const { address } = req.body;
+    const { id } = req.user;
+    const checkuser = await User.findById(id);
+    if (!checkuser) return res.status(404).json({ err: "No user was found" });
+    await User.findByIdAndUpdate(id, { address: address });
+    res.json({ msg: "Added address" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error.message);
+  }
+});
+
 //Get all Referred
 router.get("/referred", auth, async (req, res) => {
   try {

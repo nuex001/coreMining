@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node bot"
+  },
   "dependencies": {
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
