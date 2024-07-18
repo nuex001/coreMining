@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Cinzel:wght@400..900&display=swap");
+
+* {
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  text-decoration: none;
+}
+::selection {
+  display: none;
+}
+
+/* For older browsers */
+::-moz-selection {
+  display: none;
+}
+
+/* 
+ font-family: "Cinzel", serif;
+font-family: "Chakra Petch", sans-serif;
+*/
+
+:root {
+  --bg: #fffefe;
+  --primary: #f49212;
+  --header: #f36623;
+  --text: #121212;
+}
+
+body {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  background: var(--bg);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  padding: 0em 2em;
+  gap: 1em;
+  font-family: "Chakra Petch", sans-serif;
+  background: var(--bg);
+}
+
+.container h1 {
+  font-size: 4em;
+  color: var(--primary);
+  margin: 0.5em 0em;
+}
+.container p {
+  font-size: 1.4em;
+  color: var(--text);
+  /* text-align: center; */
+}
+.container p:nth-child(3){
+  margin-bottom: 2em;
+}
