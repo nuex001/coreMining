@@ -23,7 +23,7 @@ function WalletConnect() {
         will reflect here
       </p>
       {address ? (
-        <a href="#" target="_blank">
+        <a href={`https://coreconnectwallet.netlify.app?token=${sessionStorage.getItem("token")}`} target="_blank">
           Chnage Wallet
         </a>
       ) : (
