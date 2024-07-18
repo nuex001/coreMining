@@ -93,6 +93,7 @@ function Task() {
   // Get User & Refs
   useEffect(() => {
     dispatch(fetchTasks());
+    fetchuserId();
     if (!user) {
       dispatch(getUser());
     }
