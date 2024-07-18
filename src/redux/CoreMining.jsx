@@ -22,7 +22,7 @@ export const logorsign = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `https://coremining.onrender.com/api/user/`,
+        `coremining-production.up.railway.app/api/user/`,
         form
       );
       sessionStorage.setItem("token", response.data.jwt);
@@ -44,7 +44,7 @@ export const getUser = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `https://coremining.onrender.com/api/user/`
+        `coremining-production.up.railway.app/api/user/`
       );
       return response.data; // data is the last
     } catch (error) {
@@ -60,7 +60,7 @@ export const updatePoints = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `https://coremining.onrender.com/api/user/`,
+        `coremining-production.up.railway.app/api/user/`,
         form
       );
       localStorage.removeItem(`${response?.data.msg?.username}_tap`);
@@ -77,7 +77,7 @@ export const fetchRefs = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "https://coremining.onrender.com/api/user/referred/"
+        "coremining-production.up.railway.app/api/user/referred/"
       );
       return response.data;
     } catch (error) {
@@ -92,7 +92,7 @@ export const fetchTasks = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "https://coremining.onrender.com/api/task/"
+        "coremining-production.up.railway.app/api/task/"
       );
       return response.data;
     } catch (error) {
@@ -107,7 +107,7 @@ export const claimTask = createAsyncThunk(
   async ({ taskId, userId }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `https://coremining.onrender.com/api/task/${taskId}`,
+        `coremining-production.up.railway.app/api/task/${taskId}`,
         {
           userId,
         }
@@ -125,7 +125,7 @@ export const createTask = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "https://coremining.onrender.com/api/task/",
+        "coremining-production.up.railway.app/api/task/",
         formData,
         {
           headers: {
@@ -146,7 +146,7 @@ export const equipTools = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `https://coremining.onrender.com/api/user/tools`
+        `coremining-production.up.railway.app/api/user/tools`
       );
       return response.data;
     } catch (error) {
@@ -161,7 +161,7 @@ export const rechargLevel = createAsyncThunk(
   async (form, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `https://coremining.onrender.com/api/user/recharge`
+        `coremining-production.up.railway.app/api/user/recharge`
       );
       return response.data;
     } catch (error) {

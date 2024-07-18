@@ -54,7 +54,7 @@ body {
   height: 8em;
   display: flex;
   align-items: center;
-  padding: 1em 2em;
+  padding: 1em 1.8em;
   border-radius: 20px;
   z-index: 8888888;
   background: var(--bg);
@@ -68,24 +68,26 @@ body {
   justify-content: space-between;
 }
 .container nav ul li a {
-  font-size: 1em;
+  font-size: 0.9em;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.4em;
   color: var(--primary);
-  padding: 1em 1.8em;
+  padding: 0.6em 1.6em;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
   transition: 500ms ease-in-out;
 }
 .container nav ul li a .icon {
-  font-size: 3em;
+  font-size: 2.5em;
 }
 .container nav ul li a.active {
   color: var(--bg);
   background: var(--primary);
 }
+
+
 /*  */
 .loaderCont {
   position: fixed;

@@ -1,0 +1,33 @@
+.container .walletcont {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 2em 2em;
+  padding-top: 2em;
+}
+.container .walletcont .icon {
+  font-size: 12em;
+  color: var(--primary);
+}
+.container .walletcont h1 {
+  font-size: 4em;
+  color: var(--primary);
+}
+.container .walletcont p {
+  font-size: 1.4em;
+  color: var(--text);
+  text-align: center;
+}
+.container .walletcont a{
+    font-size: 2em;
+    padding: 0.7em 2.5em;
+    border-radius: 10px;
+    color: var(--bg);
+    position: relative;
+    background: var(--primary);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

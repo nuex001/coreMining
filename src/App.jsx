@@ -9,6 +9,7 @@ import Leagues from "./components/pages/Leagues";
 import PrivateRouter from "./components/pages/PrivateRouter";
 import ScrollToTop from "./components/pages/ScrollToTop";
 import WebApp from "@twa-dev/sdk";
+import WalletConnect from "./components/pages/WalletConnect";
 function App() {
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -28,6 +29,7 @@ function App() {
             <Route exact path="/ref" element={<Ref />} />
             <Route exact path="/boosts" element={<Boosts />} />
             <Route exact path="/league" element={<Leagues />} />
+            <Route exact path="/connect" element={<WalletConnect />} />
           </Route>
         </Routes>
         {/* <Footer /> */}
