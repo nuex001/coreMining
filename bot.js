@@ -16,6 +16,8 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*", // Allow this origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow these HTTP methods
+    credentials: true, // Allow cookies to be sent
   })
 );
 
@@ -31,39 +33,45 @@ mongoose
     console.log(err);
   });
 
-const web_link = "https://coremining.netlify.app/";
-const bot_link = "https://t.me/News_Pointsbot";
+const web_link = "https://ironage.netlify.app/";
+const bot_link = "https://t.me/ironageBot";
 
 bot.start((ctx) => {
   const referrerId = ctx.startPayload;
   const userId = ctx.from.id; // Get referrer's user ID
   const referralLink = `${web_link}?referrerId=${referrerId}`; // Corrected referral link
   const username = ctx.from.username ? `@${ctx.from.username}` : "there";
-  // Send the initial message with inline keyboard
-  ctx.reply(
-    `Hey ${username}! It's CoreMining! ⛏️ Your ultimate app for digging deep into the riches of the Earth, right at your fingertips! 📲\n\We're thrilled to launch our new Telegram mini app! Start mining points now, and who knows what ancient treasures you'll uncover soon! 🚀\n\nGot friends? Bring 'em into the fold! The more, the stronger our mining community! ⛏️ \n\nRemember: CoreMining is where prosperity is forged and endless opportunities await!!! 🌟`,
+
+  // URL of the image to be included in the message
+  const imageUrl = 'https://res.cloudinary.com/dtjl9nigz/image/upload/v1721391625/_39384404-b8a8-4ec3-b502-dbd02112f357_imcrxj.jpg'; // Replace with your actual image URL
+
+  // Send the initial message with the image and inline keyboard
+  ctx.replyWithPhoto(
+    { url: imageUrl },
     {
+      caption: `Hey ${username}! It's Iron Age! ⛏️ Your ultimate app for digging deep into the riches of the Earth, right at your fingertips! 📲\n\nWe're thrilled to launch our new Telegram mini app! Start mining points now, and who knows what ancient treasures you'll uncover soon! 🚀\n\nGot friends? Bring 'em into the fold! The more, the stronger our mining community! ⛏️\n\nRemember: Iron Age is where prosperity is forged and endless opportunities await!!! 🌟`,
       reply_markup: {
         inline_keyboard: [
           [
             {
-              text: "Launch CoreMining",
+              text: "Launch Iron Age",
               web_app: { url: referralLink },
             },
           ],
           [
             {
               text: "Join Community",
-              url: "https://t.me/earnthroughnews",
+              url: "https://t.me/ironageOfficail", // Replace with the actual link to your community
             },
-          ], // Replace with the actual link to your community
+          ],
         ],
       },
     }
   );
 });
 
-// bot.launch();
+
+bot.launch();
 
 // Health check route
 app.get("/", (req, res) => {
