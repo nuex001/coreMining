@@ -16,8 +16,6 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*", // Allow this origin
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow these HTTP methods
-    credentials: true, // Allow cookies to be sent
   })
 );
 
@@ -65,7 +63,7 @@ bot.start((ctx) => {
   );
 });
 
-bot.launch();
+// bot.launch();
 
 // Health check route
 app.get("/", (req, res) => {
