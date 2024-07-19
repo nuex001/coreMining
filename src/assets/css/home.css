@@ -21,7 +21,7 @@
   color: var(--primary);
 }
 .container .home .txHeader .stage {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   font-size: 2em;
@@ -29,7 +29,7 @@
   color: var(--primary);
 }
 .container .home .txHeader .stage {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
