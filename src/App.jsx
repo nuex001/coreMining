@@ -7,7 +7,6 @@ import { useWalletClient } from "wagmi";
 import axios from "axios";
 
 function App() {
-  const [userToken, setUserToken] = useState(null);
   const [address, setAddress] = useState(null);
   const { data: walletClient } = useWalletClient();
 
@@ -15,7 +14,9 @@ function App() {
     const token = new URLSearchParams(window.location.search).get("token");
     // console.log(token);
     if (token && token !== "") {
-      setUserToken(token);
+      axios.defaults.headers.common["auth-token"] = token;
+    } else {
+      delete axios.defaults.headers.common["auth-token"];
     }
   }, []);
   const getAndsaveAddress = async () => {
@@ -24,14 +25,21 @@ function App() {
       setAddress(accounts[0]);
     }
   };
-  // 
+  //
   const saveAddressDb = async () => {
-    if (address && userToken) {
-        axios.defaults.headers.common["auth-token"] = userToken;
+    if (address) {
+      try {
         const response = await axios.put(
-          `coremining-production.up.railway.app/api/user/address`,
-          {address:address}
+          "https://coremining-production.up.railway.app/api/user/address",
+          { address: address }
         );
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.error(
+          "Error saving address:",
+          error.response ? error.response.data : error.message
+        );
+      }
     }
   };
   useEffect(() => {
@@ -40,10 +48,10 @@ function App() {
     }
   }, [walletClient]);
   useEffect(() => {
-    if (address && userToken) {
+    if (address) {
       saveAddressDb();
     }
-  }, [address, userToken]);
+  }, [address]);
   return (
     <div className="container">
       <h1>Connect Wallet</h1>
