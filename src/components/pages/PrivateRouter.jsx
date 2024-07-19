@@ -46,7 +46,7 @@ const PrivateRoute = () => {
       fetchUserData();
       const timeoutId = setTimeout(() => {
         setIsLoading(false);
-      }, 5000);
+      }, 3000);
       // Cleanup function
       return () => {
         clearTimeout(timeoutId); // Clear the timeout when component unmounts
