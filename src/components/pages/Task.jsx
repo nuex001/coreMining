@@ -15,6 +15,7 @@ import { claimTask, clear, fetchTasks, getUser } from "../../redux/CoreMining";
 import { errorMsgs, successMsg } from "../../utils/utils";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import WebApp from "@twa-dev/sdk";
 
 function Task() {
   const dispatch = useDispatch();
