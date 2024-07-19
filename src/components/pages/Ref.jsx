@@ -45,21 +45,19 @@ function Ref() {
   // Get User & Refs
   useEffect(() => {
     dispatch(fetchRefs());
-   if (!user) {
-    dispatch(getUser());
-   }
+    if (!user) {
+      dispatch(getUser());
+    }
     return () => clearTimeout(timer.current);
   }, []);
 
   return (
     <div className="ref">
-      <h1>4 Referraals</h1>
+      <h1>{refs && refs.length} Referraals</h1>
       <div className="copyCont">
         <ul>
           <h2>My invite Link</h2>
-          <p>
-          https://t.me/ironageBot?start={sessionStorage.getItem("myId")}
-          </p>
+          <p>https://t.me/ironageBot?start={sessionStorage.getItem("myId")}</p>
         </ul>
         <div className="btn" onClick={copyLink} ref={copyBtnRef}>
           Copy
