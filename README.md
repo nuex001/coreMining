@@ -1,3 +1,9 @@
-# React + Vite
+# IRON AGE
 
-We are working on a Tg mini app for Core Hackathon, will keep you guys updated 
+# IRON AGE MAIN
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+ # COMMANDS
+  npm install
+  npm run dev
